@@ -47,13 +47,8 @@ export function useTodos(): any {
             // Return a context object with the snapshotted value
             return {previousTodos};
         },
-        onSettled: (newTodo, error, variables, context) => {
-            // If the mutation fails, use the context returned from onMutate to roll back
-            if (error) {
-                queryClient.setQueryData(TODO_QUERY_KEY, context.previousTodos);
-            }
-            // Always refetch after error or success:
-            // queryClient.invalidateQueries(TODOS_QUERY_KEY)
+        onError: (error, variables, context) => {
+            queryClient.setQueryData(TODO_QUERY_KEY, context.previousTodos);
         }
     }).mutate;
 
@@ -76,13 +71,8 @@ export function useTodos(): any {
             // Return a context object with the snapshotted value
             return {previousTodos};
         },
-        onSettled: (newTodo, error, variables, context: any) => {
-            // If the mutation fails, use the context returned from onMutate to roll back
-            if (error) {
-                queryClient.setQueryData(TODO_QUERY_KEY, context.previousTodos);
-            }
-            // Always refetch after error or success:
-            // queryClient.invalidateQueries(TODOS_QUERY_KEY)
+        onError: (error, variables, context: any) => {
+            queryClient.setQueryData(TODO_QUERY_KEY, context.previousTodos);
         }
     }).mutate;
 

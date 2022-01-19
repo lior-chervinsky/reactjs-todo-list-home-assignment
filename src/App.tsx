@@ -1,38 +1,12 @@
-import React, {useContext, useState} from "react";
+import React from "react";
 import {TodoList} from "./todo-list/TodoList";
 import "./App.scss";
 import {QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from "react-query/devtools";
-import {TodosContext, TodosProvider} from "./todos-context/todos-context";
+import {TodosProvider} from "./todos-context/todos-context";
+import {TodoInput} from "./todos-input/todos-input";
 
 const queryClient = new QueryClient();
-
-function TodoInput() {
-    const [, {createTodoMutation}] = useContext(TodosContext);
-    const [inputState, setInputState] = useState("");
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (inputState) {
-            createTodoMutation({todo: {title: inputState, completed: false}});
-            setInputState("");
-        }
-    }
-    return (
-        <form className="todos-list-input"
-              onSubmit={handleSubmit}
-        >
-            <input
-                value={inputState}
-                onChange={(e) => {
-                    const {value} = e.target;
-                    setInputState(value);
-                }}
-            />
-            <button>Create</button>
-        </form>
-    );
-}
 
 export default function App() {
     return (

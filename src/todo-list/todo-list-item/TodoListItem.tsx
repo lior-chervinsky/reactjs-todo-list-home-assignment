@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {memo} from 'react'
 
 import './TodoListItem.scss'
 
-export function TodoListItem({todo, deleteItem, toggleCompleted}) {
+
+export const TodoListItemPure = memo(TodoListItem)
+
+function TodoListItem({todo, deleteItem, toggleCompleted}) {
     const {title, id, completed} = todo
     const handleClick = (event) => {
         const isCtrlClicked = event.ctrlKey || event.metaKey;
