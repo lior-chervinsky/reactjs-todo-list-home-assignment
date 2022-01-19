@@ -1,15 +1,33 @@
 @import "style/colors";
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color: #{$light-text-color};
+    --bg-color: #{$light-background};
+    --bg-list-item: #{$light-list-item};
+    --bg-list-item-completed: #{$light-list-item-completed};
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color: #{$dark-text-color};
+    --bg-color: #{$dark-background};
+    --bg-list-item: #{$dark-list-item};
+    --bg-list-item-completed: #{$dark-list-item-completed};
+  }
+}
+
 .app {
-  color: $light-text-color;
-  background-color: $light-background;
+  color: var(--color);
+  background-color: var(--bg-color);
   display: flex;
   flex-direction: column;
   margin: 0;
   height: 100vh;
 
-  &.dark-theme{
-    color: $dark-text-color;
-    background-color: $dark-background;
+  .todos-list-input {
+    align-self: center;
   }
 
   .list-title {
@@ -22,5 +40,5 @@
   align-self: center;
   align-items: center;
   height: 100vh;
-  gap:30px;
+  gap: 30px;
 }

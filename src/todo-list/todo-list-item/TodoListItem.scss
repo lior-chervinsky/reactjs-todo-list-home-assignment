@@ -1,24 +1,16 @@
 @import "src/style/colors";
 
 .todo-list-item {
-  color: $light-text-color;
-  background-color: $light-list-item;
+  color: var(--color);
+  background-color: var(--bg-list-item);
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
   cursor: pointer;
 
-  .dark-theme &{
-    color: $dark-text-color;
-    background-color: $dark-list-item;
-  }
-
-  &[data-completed] {
+  &[aria-checked] {
     text-decoration: line-through;
-    background-color: $light-list-item-completed;
+    background-color: var(--bg-list-item-completed);
 
-    .dark-theme &{
-      background-color: $dark-list-item-completed;
-    }
   }
 }

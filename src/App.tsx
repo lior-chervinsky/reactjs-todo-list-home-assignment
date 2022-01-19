@@ -1,26 +1,50 @@
-import React from 'react'
+import React, {useContext, useState} from "react";
 import {TodoList} from "./todo-list/TodoList";
-import './App.scss'
-import {Themes, toggleTheme, useTheme} from "./hooks/useTheme";
-import {QueryClient, QueryClientProvider,} from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
+import "./App.scss";
+import {QueryClient, QueryClientProvider} from "react-query";
+import {ReactQueryDevtools} from "react-query/devtools";
+import {TodosContext, TodosProvider} from "./todos-context/todos-context";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
+
+function TodoInput() {
+    const [, {createTodoMutation}] = useContext(TodosContext);
+    const [inputState, setInputState] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (inputState) {
+            createTodoMutation({todo: {title: inputState, completed: false}});
+            setInputState("");
+        }
+    }
+    return (
+        <form className="todos-list-input"
+              onSubmit={handleSubmit}
+        >
+            <input
+                value={inputState}
+                onChange={(e) => {
+                    const {value} = e.target;
+                    setInputState(value);
+                }}
+            />
+            <button>Create</button>
+        </form>
+    );
+}
 
 export default function App() {
-    const [theme, setTheme] = useTheme(Themes.LightTheme)
-
-    const handleSetTheme = () => {
-        setTheme(prev => toggleTheme(prev))
-    }
-    /* click on the `My List` Title to toggle dark theme (WIP) */
     return (
         <QueryClientProvider client={queryClient}>
-            <div className={`app ${theme}`}>
-                <h1 className="list-title" onClick={handleSetTheme}>My List</h1>
-                <TodoList/>
-            </div>
-            <ReactQueryDevtools initialIsOpen={false} />
+            <TodosProvider>
+                <div className="app">
+                    <h1 className="list-title">My List</h1>
+                    <TodoInput/>
+                    <TodoList/>
+                </div>
+                <ReactQueryDevtools initialIsOpen={false}/>
+            </TodosProvider>
         </QueryClientProvider>
-    )
+    );
 }

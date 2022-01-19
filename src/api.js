@@ -10,8 +10,8 @@ export async function getTodos() {
 
 export async function updateTodo({ todoId, update }) {
   const { data: todo } = await axios.patch(
-    `${API_HOST}/todos/${todoId}`,
-    update
+      `${API_HOST}/todos/${todoId}`,
+      update
   );
 
   return todo;
@@ -19,4 +19,10 @@ export async function updateTodo({ todoId, update }) {
 
 export async function deleteTodo({ todoId }) {
   return axios.delete(`${API_HOST}/todos/${todoId}`);
+}
+
+export async function createTodo({ todo }) {
+  const { data } = await axios.post(`${API_HOST}/todos/`, todo);
+
+  return data;
 }
